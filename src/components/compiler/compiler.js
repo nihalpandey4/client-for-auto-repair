@@ -12,14 +12,17 @@ export default class Compiler extends Component {
   }
   input = (event) => {
     event.preventDefault();
+    console.log(this.state); 
     this.setState({ input: event.target.value });
   };
   updateTestCases = (event) => {
     event.preventDefault();
+    console.log(this.state);
     this.setState({ test_cases: event.target.value });
   };
   updateClassName = (event) => {
     event.preventDefault();
+    console.log(this.state);
     this.setState({ class_name: event.target.value });
   };
 
@@ -35,7 +38,7 @@ export default class Compiler extends Component {
       <>
         <div className="row container-fluid">
           <div className="col-6 ml-4 ">
-            <label for="solution ">
+            <label>
               <span className="badge badge-info heading mt-2 ">
                 <i className="fas fa-code fa-fw fa-lg"></i> Code Here
               </span>
@@ -45,7 +48,7 @@ export default class Compiler extends Component {
               name="solution"
               id="source"
               onChange={this.input}
-              className=" source"
+              className="source"
             ></textarea>
 
             <button
@@ -56,7 +59,7 @@ export default class Compiler extends Component {
               <i className="fas fa-cog fa-fw"></i> Repair
             </button>
 
-            <label for="tags" className="mr-1">
+            <label className="mr-1">
               <b className="heading">Java ClassName : </b>
             </label>
             <input
@@ -70,7 +73,7 @@ export default class Compiler extends Component {
               <span className="badge badge-info heading my-2 ">
                 <i className="fas fa-exclamation fa-fw fa-md"></i> Corrected code
               </span>
-              <textarea id="output"></textarea>
+              <textarea id="output" disabled></textarea>
             </div>
           </div>
         </div>

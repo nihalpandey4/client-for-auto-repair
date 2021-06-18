@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "./Compiler.css";
+
+import axios from "axios";
 export default class Compiler extends Component {
   constructor(props) {
     super(props);
@@ -12,22 +14,29 @@ export default class Compiler extends Component {
   }
   input = (event) => {
     event.preventDefault();
-    console.log(this.state); 
     this.setState({ input: event.target.value });
   };
   updateTestCases = (event) => {
     event.preventDefault();
-    console.log(this.state);
     this.setState({ test_cases: event.target.value });
   };
   updateClassName = (event) => {
     event.preventDefault();
-    console.log(this.state);
     this.setState({ class_name: event.target.value });
   };
 
   submit = async (e) => {
     e.preventDefault();
+    const req_body = {
+      code:encodeURIComponent("package example;\n"+this.state.input),
+      class_name:this.state.class_name,
+      test_cases:encodeURIComponent("package example;\n"+this.state.test_cases)
+    }
+    axios.post("localhost:3001/submit_code_and_test_cases",req_body).then(data=>{
+      this.setState({output:data});
+    }).catch((err)=>{
+      console.log(err);
+    });
     let outputText = document.getElementById("output");
     outputText.innerHTML = "";
     outputText.innerHTML += "Creating Submission ...\n";

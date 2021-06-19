@@ -32,11 +32,11 @@ export default class Compiler extends Component {
       class_name:this.state.class_name,
       test_cases:encodeURIComponent("package example;\n"+this.state.test_cases)
     }
-    axios.post("localhost:3001/submit_code_and_test_cases",req_body).then(data=>{
-      this.setState({output:data});
-    }).catch((err)=>{
-      console.log(err);
-    });
+    
+    const response = await axios.post("http://localhost:3001/submit_code_and_test_cases",req_body);
+    console.log(response);
+    this.setState({output:response.data});
+
     let outputText = document.getElementById("output");
     outputText.innerHTML = "";
     outputText.innerHTML += "Creating Submission ...\n";
@@ -82,7 +82,7 @@ export default class Compiler extends Component {
               <span className="badge badge-info heading my-2 ">
                 <i className="fas fa-exclamation fa-fw fa-md"></i> Corrected code
               </span>
-              <textarea id="output" disabled></textarea>
+              <textarea id="output" value={this.state.output} disabled></textarea>
             </div>
           </div>
         </div>

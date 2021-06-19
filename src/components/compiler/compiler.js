@@ -10,23 +10,25 @@ export default class Compiler extends Component {
       output: ``,
       class_name: ``,
       test_cases: ``,
+      color:"grey"
     };
   }
   input = (event) => {
     event.preventDefault();
-    this.setState({ input: event.target.value });
+    this.setState({ input: event.target.value,color:"grey", output:""});
   };
   updateTestCases = (event) => {
     event.preventDefault();
-    this.setState({ test_cases: event.target.value });
+    this.setState({ test_cases: event.target.value,color:"grey", output:""});
   };
   updateClassName = (event) => {
     event.preventDefault();
-    this.setState({ class_name: event.target.value });
+    this.setState({ class_name: event.target.value,color:"grey", output:"" });
   };
 
   submit = async (e) => {
     e.preventDefault();
+    this.setState({output:" Processing ...." })
     const req_body = {
       code:encodeURIComponent("package example;\n"+this.state.input),
       class_name:this.state.class_name,
@@ -35,11 +37,12 @@ export default class Compiler extends Component {
     
     const response = await axios.post("http://localhost:3001/submit_code_and_test_cases",req_body);
     console.log(response);
-    this.setState({output:response.data.corrected_code});
-
-    let outputText = document.getElementById("output");
-    outputText.innerHTML = "";
-    outputText.innerHTML += "Creating Submission ...\n";
+    if(response.data.error){
+      this.setState({output:response.data.error,color:"red"});
+    } 
+    else{
+      this.setState({output:response.data.corrected_code,color:"green"})
+    }
     console.log(this.state);
     }
   render() {
@@ -82,7 +85,7 @@ export default class Compiler extends Component {
               <span className="badge badge-info heading my-2 ">
                 <i className="fas fa-exclamation fa-fw fa-md"></i> Corrected code
               </span>
-              <textarea id="output" value={this.state.output} disabled></textarea>
+              <textarea id="output" style={{color:this.state.color}} value={this.state.output} disabled></textarea>
             </div>
           </div>
         </div>

@@ -35,7 +35,7 @@ export default class Compiler extends Component {
     
     const response = await axios.post("http://localhost:3001/submit_code_and_test_cases",req_body);
     console.log(response);
-    this.setState({output:response.data});
+    this.setState({output:response.data.corrected_code});
 
     let outputText = document.getElementById("output");
     outputText.innerHTML = "";

@@ -18,10 +18,10 @@
     resize: vertical;
     font-size: 17px;
   }
-  #output{
+  .output{
     background: #cccccc52;
     width: 120%;
-    height: 62vh;
+    height: 60vh;
     top: 6.9%;
     font-size: 18px;
     left: 52%;

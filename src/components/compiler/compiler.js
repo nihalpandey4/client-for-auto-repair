@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import "./Compiler.css";
 
+import { ToastContainer,toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 import axios from "axios";
 export default class Compiler extends Component {
   constructor(props) {
@@ -16,6 +19,11 @@ export default class Compiler extends Component {
     event.preventDefault();
     this.setState({ input: event.target.value });
   };
+
+  notify= (text)=>{
+    toast.success(text);
+  }
+
   updateTestCases = (event) => {
     event.preventDefault();
     this.setState({ test_cases: event.target.value });
@@ -24,6 +32,11 @@ export default class Compiler extends Component {
     event.preventDefault();
     this.setState({ class_name: event.target.value });
   };
+
+  copyCorrectedCode = ()=>{
+    navigator.clipboard.writeText(this.state.output);
+    this.notify("Corrected code copied !");
+  }
 
   submit = async (e) => {
     e.preventDefault();
@@ -60,6 +73,8 @@ export default class Compiler extends Component {
               className="source"
             ></textarea>
 
+            <br /><br />
+
             <button
               type="submit"
               className="btn btn-danger ml-2 mr-2 "
@@ -78,12 +93,14 @@ export default class Compiler extends Component {
             />
           </div>
           <div className="col-5">
-            <div>
+            <ToastContainer autoClose={2000} />
+            <div className="cursor" onClick={this.copyCorrectedCode}>
               <span className="badge badge-info heading my-2 ">
                 <i className="fas fa-exclamation fa-fw fa-md"></i> Corrected code
               </span>
-              <textarea id="output" value={this.state.output} disabled></textarea>
             </div>
+            <textarea id="output" value={this.state.output} disabled></textarea>
+
           </div>
         </div>
 

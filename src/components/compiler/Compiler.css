@@ -20,14 +20,17 @@
   }
   #output{
     background: #cccccc52;
-    width: 45%;
-    height: 83%;
-    position: fixed;
+    width: 120%;
+    height: 100%;
     top: 6.9%;
     font-size: 18px;
     left: 52%;
   }
   .language {
     width: 150px;
+  }
+
+  .cursor{
+    cursor: pointer;
   }
   
